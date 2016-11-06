@@ -8,7 +8,7 @@ let db;
 
 function checkDb(req, res, next) {
   if (db) { return next(); }
-  res.send('DB is not ready');
+  return res.send('DB is not ready');
 }
 
 app.use(morgan('dev'));
@@ -21,9 +21,9 @@ router.get('/', (req, res) => {
   res.send('test');
 });
 
-router.post('/add', checkDb, function(req, res){
+router.post('/add', checkDb, (req, res) => {
   const list = db.collection('list');
-  const obj = { test : Math.random() };
+  const obj = { test: Math.random() };
 
   list.insert(obj, (err) => {
     if (err) { throw err; }
@@ -42,6 +42,7 @@ const port = process.env.PORT || 3000;
 
 app.listen(port);
 
+/* eslint-disable no-console */
 console.log('Listening on port: ', port);
 
 MongoClient.connect(process.env.MONGO_DB_URL, (err, _db) => {

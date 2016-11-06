@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,10 @@
     "express": "^4.14.0",
     "mongodb": "^2.2.11",
     "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.1.0"
   }
 }
