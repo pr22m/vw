@@ -1,53 +1,50 @@
-var express = require('express');
-var mongodb = require('mongodb');
-var morgan = require('morgan');
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const morgan = require('morgan');
 
-var app = express();
-var db;
+const app = express();
 
-function checkDb(req, res, next){
-  if (db){return next();}
+let db;
 
+function checkDb(req, res, next) {
+  if (db) { return next(); }
   res.send('DB is not ready');
 }
 
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
-var router = new express.Router();
+const router = new express.Router();
 
-app.use("/test", router);
+app.use('/test', router);
 
-router.get("/", function(req, res){
+router.get('/', (req, res) => {
   res.send('test');
 });
 
-router.post("/add", checkDb, function(req, res){
-  var list = db.collection("list");
-  var obj = {test : Math.random()};
+router.post('/add', checkDb, function(req, res){
+  const list = db.collection('list');
+  const obj = { test : Math.random() };
 
-  list.insert(obj, function(err){
-    if (err) {throw err;}
-	
-    res.status(201).send("Ok");
+  list.insert(obj, (err) => {
+    if (err) { throw err; }
+    res.status(201).send('Ok');
   });
 });
 
-router.get("/list", checkDb, function(req, res){
-  db.collection("list").find({}).toArray(function(err, data){
-    if (err) {throw err;}
- 
+router.get('/list', checkDb, (req, res) => {
+  db.collection('list').find({}).toArray((err, data) => {
+    if (err) { throw err; }
     res.json(data);
-  });  
+  });
 });
 
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port);
 
 console.log('Listening on port: ', port);
 
-mongodb.MongoClient.connect(process.env.MONGO_DB_URL, function(err, _db){
-  if (err) {throw err;}
-
+MongoClient.connect(process.env.MONGO_DB_URL, (err, _db) => {
+  if (err) { throw err; }
   db = _db;
 });
