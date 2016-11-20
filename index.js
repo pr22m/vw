@@ -1,3 +1,4 @@
+require('isomorphic-fetch');
 require('./lib/server');
 //
 // const express = require('express');
