@@ -8,6 +8,9 @@
     "start": "node index.js",
     "test": "eslint ."
   },
+  "engines": {
+    "node": ">=7.1.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
